@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\USER\\source\\repos\\WebHostApplication\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BF58AA3D-BA1C-4C42-9104-28DEE95791B1}|WebHostApplication\\WebHostApplication.csproj|c:\\users\\user\\source\\repos\\webhostapplication\\webhostapplication\\views\\facturaselectronicas\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BF58AA3D-BA1C-4C42-9104-28DEE95791B1}|WebHostApplication\\WebHostApplication.csproj|solutionrelative:webhostapplication\\views\\facturaselectronicas\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\WebHostApplication\\WebHostApplication\\Views\\FacturasElectronicas\\Create.cshtml",
+              "RelativeDocumentMoniker": "WebHostApplication\\Views\\FacturasElectronicas\\Create.cshtml",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\WebHostApplication\\WebHostApplication\\Views\\FacturasElectronicas\\Create.cshtml*",
+              "RelativeToolTip": "WebHostApplication\\Views\\FacturasElectronicas\\Create.cshtml*",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAAAHAAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-23T20:39:18.247Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

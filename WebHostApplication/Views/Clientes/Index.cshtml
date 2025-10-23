@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebHostApplication.Models.Clientes.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center mb-4">Clientes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<!-- Tabla para desktop/tablets -->
+<div class="table-responsive d-none d-md-block">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.Apellido1)</th>
+                <th>@Html.DisplayNameFor(model => model.Apellido2)</th>
+                <th>@Html.DisplayNameFor(model => model.Dir)</th>
+                <th>@Html.DisplayNameFor(model => model.Tel)</th>
+                <th>@Html.DisplayNameFor(model => model.Correo)</th>
+                <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+                <th>@Html.DisplayNameFor(model => model.Porcentaje)</th>
+                <th>@Html.DisplayNameFor(model => model.Condicion)</th>
+                <th>@Html.DisplayNameFor(model => model.DocId)</th>
+                <th>@Html.DisplayNameFor(model => model.TipoTercero)</th>
+                <th>@Html.DisplayNameFor(model => model.Maximo)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Apellido1)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Apellido2)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Dir)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Tel)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Correo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Porcentaje)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Condicion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DocId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TipoTercero)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Maximo)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdCliente" class="btn btn-sm btn-warning mb-1">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.IdCliente" class="btn btn-sm btn-info mb-1">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.IdCliente" class="btn btn-sm btn-danger mb-1">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Cards para móvil -->
+<div class="d-block d-md-none">
+    @foreach (var item in Model)
+    {
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">@item.Nombre @item.Apellido1 @item.Apellido2</h5>
+                <p class="mb-1"><strong>ID:</strong> @item.Id</p>
+                <p class="mb-1"><strong>Dirección:</strong> @item.Dir</p>
+                <p class="mb-1"><strong>Tel:</strong> @item.Tel</p>
+                <p class="mb-1"><strong>Correo:</strong> @item.Correo</p>
+                <p class="mb-1"><strong>Tipo:</strong> @item.Tipo</p>
+                <p class="mb-1"><strong>Porcentaje:</strong> @item.Porcentaje</p>
+                <p class="mb-1"><strong>Condición:</strong> @item.Condicion</p>
+                <p class="mb-1"><strong>Doc ID:</strong> @item.DocId</p>
+                <p class="mb-1"><strong>Tipo Tercero:</strong> @item.TipoTercero</p>
+                <p class="mb-1"><strong>Máximo:</strong> @item.Maximo</p>
+                <div class="mt-2">
+                    <a asp-action="Edit" asp-route-id="@item.IdCliente" class="btn btn-warning btn-sm mb-1 w-100">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.IdCliente" class="btn btn-info btn-sm mb-1 w-100">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdCliente" class="btn btn-danger btn-sm mb-1 w-100">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

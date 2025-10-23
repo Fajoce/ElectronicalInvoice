@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebHostApplication.Models.Detalles.Detalles2>
+
+@{
+    ViewData["Title"] = "Facturas";
+}
+
+<h1>Facturas</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nueva Factura</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>N° Factura</th>
+            <th>Fecha</th>
+            <th>Vendedor</th>
+            <th>Cliente</th>
+            <th>Cliente2</th>
+            <th>Cajero</th>
+            <th>Subtotal</th>
+            <th>Dinero</th>
+            <th>Total IVA</th>
+            <th>Total Descuento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NumeroFactura</td>
+                <td>@item.Fecha?.ToString("yyyy-MM-dd")</td>
+                <td>@item.Vendedor?.Nombre</td>
+                <td>@item.Cliente?.Nombre</td>
+                <td>@item.Cliente2?.Nombre</td>
+                <td>@item.Cajero?.Nombre</td>
+                <td>@item.Subtotal</td>
+                <td>@item.Dinero</td>
+                <td>@item.TotalIva</td>
+                <td>@item.TotalDescuento</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.NumeroFactura">Detalles</a> |
+                    <a asp-action="Edit" asp-route-id="@item.NumeroFactura">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.NumeroFactura">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

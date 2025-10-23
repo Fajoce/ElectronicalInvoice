@@ -1,0 +1,191 @@
+﻿@model IEnumerable<WebHostApplication.Models.Detalle2>
+
+@{
+    ViewData["Title"] = "Facturas";
+}
+
+<div class="facturas-container container-fluid py-4">
+
+    <!-- 🔹 Encabezado -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <h2 class="fw-bold text-primary m-0 text-center text-md-start">📑 Listado de Facturas</h2>
+
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+            <a asp-action="ExportarExcel"
+               asp-route-fechaInicio="@ViewBag.FechaInicio"
+               asp-route-fechaFin="@ViewBag.FechaFin"
+               asp-route-clienteId="@ViewBag.ClienteId"
+               asp-route-formaPago="@ViewBag.FormaPago"
+               class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Excel</a>
+
+            <a asp-action="ExportarPdf"
+               asp-route-fechaInicio="@ViewBag.FechaInicio"
+               asp-route-fechaFin="@ViewBag.FechaFin"
+               asp-route-clienteId="@ViewBag.ClienteId"
+               asp-route-formaPago="@ViewBag.FormaPago"
+               class="btn btn-danger"><i class="bi bi-file-earmark-pdf"></i> PDF</a>
+
+            <button type="button" class="btn btn-dark" onclick="window.print()">
+                <i class="bi bi-printer"></i> Imprimir
+            </button>
+        </div>
+    </div>
+
+    <!-- 🔹 Filtros -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold">📅 Fecha Inicio</label>
+                    <input type="date" name="fechaInicio" class="form-control"
+                           value="@ViewBag.FechaInicio" />
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold">📅 Fecha Fin</label>
+                    <input type="date" name="fechaFin" class="form-control"
+                           value="@ViewBag.FechaFin" />
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold">👤 Cliente</label>
+                    <select name="clienteId" asp-items="ViewBag.Clientes" class="form-select">
+                        <option value="">-- Todos --</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold">💳 Forma de Pago</label>
+                    <select name="formaPago" asp-items="ViewBag.FormasPago" class="form-select">
+                        <option value="">-- Todas --</option>
+                    </select>
+                </div>
+
+                <div class="col-12 d-flex flex-wrap justify-content-center justify-content-md-end gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i> Filtrar
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle"></i> Limpiar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🔹 Tabla -->
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body table-responsive">
+            <table id="facturasTable" class="table table-hover align-middle table-striped mb-0">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>N° Factura</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Dinero</th>
+                        <th>Forma de Pago</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        decimal totalGeneral = 0;
+                        decimal totalDinero = 0;
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        totalGeneral += item.Subtotal ?? 0;
+                        totalDinero += item.Dinero ?? 0;
+
+                        <tr>
+                            <td class="fw-semibold text-center">#@item.NumeroFactura</td>
+                            <td>@item.Fecha?.ToString("yyyy-MM-dd")</td>
+                            <td>@item.Cliente?.Nombre</td>
+                            <td class="text-success fw-bold text-end">@((item.Subtotal ?? 0).ToString("C"))</td>
+                            <td class="text-info fw-bold text-end">@((item.Dinero ?? 0).ToString("C"))</td>
+                            <td class="text-center">
+                                @if ((item.Efectivo ?? 0) > 0)
+                                {
+                                    <span class="badge bg-success">Efectivo</span>
+                                }
+                                else if ((item.Tcredito ?? 0) > 0)
+                                {
+                                    <span class="badge bg-primary">T. Crédito</span>
+                                }
+                                else if ((item.Tdebito ?? 0) > 0)
+                                {
+                                    <span class="badge bg-warning text-dark">T. Débito</span>
+                                }
+                                else if ((item.Transferencia ?? 0) > 0)
+                                {
+                                    <span class="badge bg-info text-dark">Transferencia</span>
+                                }
+                                else if ((item.Credito ?? 0) > 0)
+                                {
+                                    <span class="badge bg-secondary">Crédito</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-light text-dark">N/A</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-dark text-center">
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">TOTALES:</td>
+                        <td class="text-success fw-bold text-end">@totalGeneral.ToString("C")</td>
+                        <td class="text-info fw-bold text-end">@totalDinero.ToString("C")</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 🔹 DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#facturasTable').DataTable({
+            pageLength: 25,
+            responsive: true,
+            lengthMenu: [[25, 50, 100], [25, 50, 100]],
+            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+            order: [[1, 'desc']]
+        });
+    });
+</script>
+
+<style>
+    /* 📱 Ajustes responsive */
+    media (max-width: 768px) {
+        .facturas-container
+
+    {
+        padding: 1rem;
+    }
+
+    .card {
+        border-radius: 12px;
+    }
+
+    .table-responsive {
+        border-radius: 12px;
+        overflow-x: auto;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+    }
+
+    }
+</style>

@@ -1,0 +1,42 @@
+﻿@model WebHostApplication.Models.TuProyecto.Models.Categoria
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Categoria</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ButtonName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ButtonName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NombreCategoria)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NombreCategoria)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ImagenRuta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ImagenRuta)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Fuente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Fuente)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdCategoria">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

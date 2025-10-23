@@ -1,0 +1,31 @@
+﻿@model WebHostApplication.Models.Cajero
+
+@{
+    ViewData["Title"] = "Editar Cajero";
+}
+
+<h2>Editar Cajero</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="IdCajero" />
+
+    <div class="form-group">
+        <label asp-for="Nombre"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PrimerApellido"></label>
+        <input asp-for="PrimerApellido" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SegundoApellido"></label>
+        <input asp-for="SegundoApellido" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="dato"></label>
+        <input asp-for="dato" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Cancelar</a>
+</form>

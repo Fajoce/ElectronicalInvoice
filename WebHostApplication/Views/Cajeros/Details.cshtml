@@ -1,0 +1,31 @@
+﻿@model WebHostApplication.Models.Cajero
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h2>Detalles del Cajero</h2>
+
+<div>
+    <p><strong>Nombre:</strong> @Model.Nombre</p>
+    <p><strong>Apellidos:</strong> @Model.PrimerApellido @Model.SegundoApellido</p>
+    <p><strong>Dirección:</strong> @Model.dato</p>
+   
+</div>
+
+<h3>Facturas Asociadas</h3>
+@if (Model.Facturas.Any())
+{
+    <ul>
+        @foreach (var f in Model.Facturas)
+        {
+            <li>Factura N° @f.NumeroFactura - Fecha: @f.Fecha</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No tiene facturas registradas.</p>
+}
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Volver</a>

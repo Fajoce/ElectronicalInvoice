@@ -1,0 +1,18 @@
+﻿@model WebHostApplication.Models.Cajero
+
+@{
+    ViewData["Title"] = "Eliminar Cajero";
+}
+
+<h2>¿Estás seguro de eliminar este Cajero?</h2>
+
+<div>
+    <p><strong>Nombre:</strong> @Model.Nombre</p>
+    <p><strong>Apellido:</strong> @Model.PrimerApellido</p>
+ </div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="IdCajero" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

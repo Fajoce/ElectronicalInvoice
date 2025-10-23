@@ -1,0 +1,140 @@
+﻿@model WebHostApplication.ViewModels.Pedidos.PedidosDTO
+
+@{
+    ViewData["Title"] = "Nuevo Pedido";
+}
+
+<div class="container">
+    <h2 class="fw-bold text-primary mb-4">📝 Nuevo Pedido</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label asp-for="IdCliente" class="form-label">👤 Cliente</label>
+                <select asp-for="IdCliente" asp-items="ViewBag.Clientes" class="form-select"></select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="IdVendedor" class="form-label">🧑‍💼 Vendedor</label>
+                <select asp-for="IdVendedor" asp-items="ViewBag.Vendedores" class="form-select"></select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="FormaPago" class="form-label">💳 Forma de Pago</label>
+                <input asp-for="FormaPago" class="form-control" placeholder="Ej: Efectivo, Crédito, etc." />
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label asp-for="Fecha" class="form-label">📅 Fecha</label>
+                <input asp-for="Fecha" type="date" class="form-control" />
+            </div>
+        </div>
+
+        <h4 class="fw-semibold mb-3">📦 Detalles del Pedido</h4>
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover align-middle" id="tabla-detalles">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Detalles.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select asp-for="Detalles[i].ProductoId" asp-items="ViewBag.Productos" class="form-select"></select>
+                            </td>
+                            <td>
+                                <input asp-for="Detalles[i].Cantidad" type="number" min="1" class="form-control cantidad" />
+                            </td>
+                            <td>
+                                <input asp-for="Detalles[i].Precio" type="number" step="0.01" class="form-control precio" />
+                            </td>
+                            <td class="subtotal fw-bold text-success">0</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">🗑️</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">TOTAL:</td>
+                        <td id="totalGeneral" class="fw-bold text-primary">0</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <button type="button" class="btn btn-secondary mt-2" onclick="addRow()">➕ Agregar Producto</button>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">💾 Guardar Pedido</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function addRow() {
+            var index = document.querySelectorAll("#tabla-detalles tbody tr").length;
+            var row = `
+                <tr>
+                    <td>
+                        <select name="Detalles[${index}].ProductoId" class="form-select">
+                            @foreach (var p in (SelectList)ViewBag.Productos)
+                            {
+                                    <option value="@p.Value">@p.Text</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input name="Detalles[${index}].Cantidad" type="number" min="1" class="form-control cantidad" />
+                    </td>
+                    <td>
+                        <input name="Detalles[${index}].Precio" type="number" step="0.01" class="form-control precio" />
+                    </td>
+                    <td class="subtotal fw-bold text-success">0</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">🗑️</button>
+                    </td>
+                </tr>`;
+            document.querySelector("#tabla-detalles tbody").insertAdjacentHTML("beforeend", row);
+        }
+
+        function removeRow(btn) {
+            btn.closest("tr").remove();
+            calcularTotales();
+        }
+
+        // 🔄 Calcular subtotales y total
+        function calcularTotales() {
+            let total = 0;
+            document.querySelectorAll("#tabla-detalles tbody tr").forEach(row => {
+                let cantidad = parseFloat(row.querySelector(".cantidad")?.value) || 0;
+                let precio = parseFloat(row.querySelector(".precio")?.value) || 0;
+                let subtotal = cantidad * precio;
+                row.querySelector(".subtotal").innerText = subtotal.toLocaleString("es-CO", { style: "currency", currency: "COP" });
+                total += subtotal;
+            });
+            document.getElementById("totalGeneral").innerText = total.toLocaleString("es-CO", { style: "currency", currency: "COP" });
+        }
+
+        // Escuchar cambios
+        document.addEventListener("input", function (e) {
+            if (e.target.classList.contains("cantidad") || e.target.classList.contains("precio")) {
+                calcularTotales();
+            }
+        });
+
+        // Calcular al inicio
+        calcularTotales();
+    </script>
+}

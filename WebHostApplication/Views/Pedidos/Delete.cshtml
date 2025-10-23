@@ -1,0 +1,14 @@
+﻿@model WebHostApplication.Models.Pedidos.Pedido
+
+<h2>Eliminar Pedido</h2>
+
+<h4>Pedido #@Model.Id</h4>
+<p>Cliente: @Model.Cliente?.Nombre</p>
+<p>Vendedor: @Model.Vendedor?.Nombre</p>
+<p>Total: @Model.Total.ToString("C")</p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

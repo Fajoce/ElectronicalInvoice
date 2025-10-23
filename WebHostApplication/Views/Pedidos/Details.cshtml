@@ -1,0 +1,32 @@
+﻿<h3 class="mt-4">Productos del Pedido</h3>
+@model WebHostApplication.Models.Pedidos.Pedido
+
+<h2>Detalle del Pedido</h2>
+
+<p><strong>Cliente:</strong> @Model.Cliente</p>
+<p><strong>Fecha:</strong> @Model.Fecha.ToShortDateString()</p>
+<p><strong>Forma de Pago:</strong> @Model.FormaPago</p>
+<p><strong>Total:</strong> @Model.Total</p>
+
+<h4>Productos</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.Detalles)
+        {
+            <tr>
+                <td>@d.Producto.Descripcion</td>
+                <td>@d.Cantidad</td>
+                <td>@d.Precio</td>
+                <td>@d.SubTotal</td>
+            </tr>
+        }
+    </tbody>
+</table>

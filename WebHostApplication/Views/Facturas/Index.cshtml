@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebHostApplication.Models.Detalle2>
+
+@{
+    ViewData["Title"] = "Facturas";
+}
+
+<h2>Facturas</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nueva Factura</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>N° Factura</th>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Vendedor</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var factura in Model)
+        {
+            <tr>
+                <td>@factura.NumeroFactura</td>
+                <td>@factura.Fecha?.ToString("dd/MM/yyyy")</td>
+                <td>@factura.Cliente?.Nombre</td>
+                <td>@factura.Vendedor?.Nombre</td>
+                <td>@factura.Subtotal?.ToString("C")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@factura.NumeroFactura" class="btn btn-info btn-sm">Ver</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

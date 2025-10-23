@@ -1,0 +1,65 @@
+﻿@model WebHostApplication.ViewModels.Pedidos.PedidosDTO
+
+<h2>Editar Pedido</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" /> <!-- 👈 Para que llegue al controlador -->
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Cliente</label>
+            <select asp-for="IdCliente" asp-items="ViewBag.Clientes" class="form-control"></select>
+        </div>
+        <div class="col-md-6">
+            <label>Vendedor</label>
+            <select asp-for="IdVendedor" asp-items="ViewBag.Vendedores" class="form-control"></select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Fecha</label>
+            <input asp-for="Fecha" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label>Forma de Pago</label>
+            <input asp-for="FormaPago" class="form-control" />
+        </div>
+    </div>
+
+    <h4>Detalles</h4>
+    <table class="table table-bordered" id="tabla-detalles">
+        <thead class="table-dark">
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Detalles.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select asp-for="Detalles[i].ProductoId" asp-items="ViewBag.Productos" class="form-control"></select>
+                    </td>
+                    <td>
+                        <input asp-for="Detalles[i].Cantidad" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="Detalles[i].Precio" class="form-control" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">❌</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Actualizar Pedido</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

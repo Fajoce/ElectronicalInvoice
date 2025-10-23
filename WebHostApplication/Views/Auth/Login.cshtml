@@ -1,0 +1,100 @@
+﻿@model WebHostApplication.ViewModels.Usuarios.LoginDTO
+
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="login-container">
+    <div class="login-card shadow">
+        <h2 class="text-center mb-4 text-primary fw-bold">Iniciar Sesión</h2>
+
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuario</label>
+                <input type="text" id="username" name="Username" class="form-control form-control-lg" />
+                <span asp-validation-for="Username" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" id="password" name="Password" class="form-control form-control-lg" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">Entrar</button>
+
+            <div class="text-center mt-3">
+                <a asp-action="Register" class="text-primary text-decoration-none">Crear nueva cuenta</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #2d6ff7, #5f2df7);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem 3rem;
+        width: 380px;
+        max-width: 90%;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+        .login-card h2 {
+            font-size: 1.8rem;
+        }
+
+    .form-label {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .form-control-lg {
+        font-size: 1.1rem;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+    }
+
+    .btn-lg {
+        font-size: 1.1rem;
+        border-radius: 10px;
+        padding: 0.75rem;
+    }
+
+    a.text-primary:hover {
+        text-decoration: underline;
+    }
+
+    media (max-width: 480px) {
+        .login-card
+
+    {
+        padding: 2rem 1.5rem;
+        width: 95%;
+    }
+
+    }
+</style>

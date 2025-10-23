@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+<div class="content-wrapper">
+    <header class="navbar d-flex justify-content-between align-items-center px-3 py-2 bg-light shadow-sm">
+        <div class="d-flex align-items-center gap-3">
+            <span id="fechaHora" class="text-muted small"></span>
+        </div>
+       
+    </header>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const fechaHora = document.getElementById("fechaHora");
+
+            function actualizarFechaHora() {
+                const ahora = new Date();
+                const opciones = {
+                    weekday: 'long', year: 'numeric', month: 'long',
+                    day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
+                };
+                fechaHora.textContent = ahora.toLocaleString('es-ES', opciones);
+            }
+
+            actualizarFechaHora(); // mostrar inmediatamente
+            setInterval(actualizarFechaHora, 1000); // actualizar cada segundo
+        });
+    </script>
+}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h1 class="display-5 fw-bold">Bienvenido a WebHostApplication</h1>
+            <p class="text-muted">Selecciona un módulo para comenzar</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Cajeros -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body" style="color:cadetblue">
+                    <div class="fs-1 mb-2">💳</div>
+                    <h5 class="card-title">Cajeros</h5>
+                    <p class="card-text small text-muted">Administrar cajeros registrados</p>
+                    <a asp-controller="Cajeros" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorías -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="fs-1 mb-2">📂</div>
+                    <h5 class="card-title">Categorías</h5>
+                    <p class="card-text small text-muted">Gestionar categorías de productos</p>
+                    <a asp-controller="Categorias" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clientes -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="fs-1 mb-2">👥</div>
+                    <h5 class="card-title">Clientes</h5>
+                    <p class="card-text small text-muted">Ver y administrar clientes</p>
+                    <a asp-controller="Clientes" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divisiones -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="fs-1 mb-2">🏢</div>
+                    <h5 class="card-title">Divisiones</h5>
+                    <p class="card-text small text-muted">Configurar divisiones</p>
+                    <a asp-controller="Divisiones" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+        <!-- Grupos -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="fs-1 mb-2">🏢</div>
+                    <h5 class="card-title">Grupos</h5>
+                    <p class="card-text small text-muted">Configurar grupos</p>
+                    <a asp-controller="Grupos" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+        <!-- Productos -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="fs-1 mb-2">🏢</div>
+                    <h5 class="card-title">Productos</h5>
+                    <p class="card-text small text-muted">Configurar grupos</p>
+                    <a asp-controller="Productos" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+        <!-- RegistroZeta2 -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="fs-1 mb-2">🏢</div>
+                    <h5 class="card-title">RegistroZeta2</h5>
+                    <p class="card-text small text-muted">Configurar RegistroZeta2</p>
+                    <a asp-controller="RegistrosZeta2" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+        <!-- Resoluciones Electronicas -->
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="fs-1 mb-2">🏢</div>
+                    <h5 class="card-title">Resoluciones electrónicas</h5>
+                    <p class="card-text small text-muted">Configurar Resoluciones electrónicas</p>
+                    <a asp-controller="ResolucionesElectronicas" asp-action="Index" class="btn btn-primary btn-sm">Ir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

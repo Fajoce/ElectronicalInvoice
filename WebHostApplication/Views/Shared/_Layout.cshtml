@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebHostApplication</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ====== Layout principal ====== */
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ====== Sidebar ====== */
+        .sidebar {
+            width: 230px;
+            background: linear-gradient(180deg, #0d6efd 0%, #0a58ca 100%);
+            color: white;
+            padding: 1.5rem 1rem;
+            flex-shrink: 0;
+        }
+
+            .sidebar .nav-link {
+                color: #e9ecef;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: .6rem 1rem;
+                border-radius: 8px;
+                transition: all 0.2s;
+            }
+
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    background: rgba(255, 255, 255, 0.2);
+                    color: #fff;
+                }
+
+                .sidebar .nav-link i {
+                    font-size: 1.2rem;
+                }
+
+        /* ====== Contenido ====== */
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: .75rem 1.5rem;
+        }
+
+            .navbar .logout-btn {
+                border: 1px solid #dc3545;
+                color: #dc3545;
+                border-radius: 6px;
+                padding: .4rem .75rem;
+                transition: 0.2s;
+            }
+
+                .navbar .logout-btn:hover {
+                    background: #dc3545;
+                    color: #fff;
+                }
+
+        .content {
+            background: #ffffff;
+            margin: 1.5rem;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: .75rem;
+            background-color: #f8f9fa;
+            font-size: 0.9rem;
+        }
+
+        .content {
+            background: #ffffff;
+            margin: 1.5rem;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            min-height: calc(100vh - 180px); /* asegura que llegue hasta abajo */
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h5 class="text-center mb-4"><i class="bi bi-globe"></i> WebHost</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link active" asp-controller="Home" asp-action="Index"><i class="bi bi-house-fill"></i> Home</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Cajeros" asp-action="Index"><i class="bi bi-credit-card"></i> Cajeros</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Clientes" asp-action="Index"><i class="bi bi-people"></i> Clientes</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Productos" asp-action="Index"><i class="bi bi-box-seam"></i> Productos</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Clientes2" asp-action="Index"><i class="bi bi-person-vcard"></i> Clientes2</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Vendedores" asp-action="Index"><i class="bi bi-person-workspace"></i> Vendedores</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="OrdenPedidos" asp-action="Index"><i class="bi bi-receipt"></i> Pedidos</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Filtros" asp-action="Index"><i class="bi bi-funnel"></i> Filtros y Reportes</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Detalle1" asp-action="Index"><i class="bi bi-graph-up"></i> Utilidad Facturas</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="FacturasElectronicas" asp-action="Create"><i class="bi bi-file-earmark-plus"></i> Crear Factura</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Kardex" asp-action="Index"><i class="bi bi-journal-text"></i> Kardex</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contenido principal -->
+        <div class="content-wrapper">
+            <header class="navbar d-flex justify-content-between align-items-center px-3 py-2 bg-light shadow-sm">
+                <div class="d-flex align-items-center gap-3">
+                    <h4> <span>Bienvenido, 👋 <strong>@ViewBag.Usuario</strong></span></h4>
+                    <span id="fechaHora" class="text-muted small"></span>
+                </div>
+                <a asp-controller="Auth" asp-action="Logout" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
+            </header>
+
+            <main class="content">
+                @RenderBody()
+            </main>
+
+            <footer>
+                &copy; 2025 - <strong>WebHostApplication</strong> |
+                
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const fechaHora = document.getElementById("fechaHora");
+
+            function actualizarFechaHora() {
+                const ahora = new Date();
+                const opciones = {
+                    weekday: 'long', year: 'numeric', month: 'long',
+                    day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
+                };
+                fechaHora.textContent = ahora.toLocaleString('es-ES', opciones);
+            }
+
+            actualizarFechaHora(); // mostrar inmediatamente
+            setInterval(actualizarFechaHora, 1000); // actualizar cada segundo
+        });
+    </script>
+}

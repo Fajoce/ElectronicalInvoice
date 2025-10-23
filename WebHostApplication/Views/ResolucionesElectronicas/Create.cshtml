@@ -1,0 +1,78 @@
+﻿@model WebHostApplication.Models.ResolucionElectronica
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ResolucionElectronica</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <input asp-for="Tipo" class="form-control" />
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDian" class="control-label"></label>
+                <input asp-for="IdDian" class="form-control" />
+                <span asp-validation-for="IdDian" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inicio" class="control-label"></label>
+                <input asp-for="Inicio" class="form-control" />
+                <span asp-validation-for="Inicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Final" class="control-label"></label>
+                <input asp-for="Final" class="form-control" />
+                <span asp-validation-for="Final" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consecutivo" class="control-label"></label>
+                <input asp-for="Consecutivo" class="form-control" />
+                <span asp-validation-for="Consecutivo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaFinal" class="control-label"></label>
+                <input asp-for="FechaFinal" class="form-control" />
+                <span asp-validation-for="FechaFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prefijo" class="control-label"></label>
+                <input asp-for="Prefijo" class="form-control" />
+                <span asp-validation-for="Prefijo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Resolucion" class="control-label"></label>
+                <input asp-for="Resolucion" class="form-control" />
+                <span asp-validation-for="Resolucion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdResolDian" class="control-label"></label>
+                <input asp-for="IdResolDian" class="form-control" />
+                <span asp-validation-for="IdResolDian" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

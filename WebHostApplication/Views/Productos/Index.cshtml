@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebHostApplication.Models.Productos>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center mb-4">Productos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<!-- Tabla para desktop/tablets -->
+<div class="table-responsive d-none d-md-block">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                <th>@Html.DisplayNameFor(model => model.Precio1)</th>
+                <th>@Html.DisplayNameFor(model => model.Precio2)</th>
+                <th>@Html.DisplayNameFor(model => model.Precio3)</th>
+                <th>@Html.DisplayNameFor(model => model.Nfrac)</th>
+                <th>@Html.DisplayNameFor(model => model.Existencia)</th>
+                <th>@Html.DisplayNameFor(model => model.Grupo)</th>
+                <th>@Html.DisplayNameFor(model => model.Iva)</th>
+                <th>@Html.DisplayNameFor(model => model.Costo)</th>
+                <th>@Html.DisplayNameFor(model => model.Max)</th>
+                <th>@Html.DisplayNameFor(model => model.Min)</th>
+                <th>@Html.DisplayNameFor(model => model.Uni)</th>
+                <th>@Html.DisplayNameFor(model => model.Codigo2)</th>
+                <th>@Html.DisplayNameFor(model => model.Rf)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Precio1)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Precio2)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Precio3)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nfrac)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Existencia)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Grupo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Iva)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Costo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Max)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Min)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Uni)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Codigo2)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Rf)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning mb-1">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info mb-1">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger mb-1">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Cards para móviles -->
+<div class="d-block d-md-none">
+    @foreach (var item in Model)
+    {
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">@item.Descripcion</h5>
+                <p class="mb-1"><strong>Precio1:</strong> @item.Precio1</p>
+                <p class="mb-1"><strong>Precio2:</strong> @item.Precio2</p>
+                <p class="mb-1"><strong>Precio3:</strong> @item.Precio3</p>
+                <p class="mb-1"><strong>Nfrac:</strong> @item.Nfrac</p>
+                <p class="mb-1"><strong>Existencia:</strong> @item.Existencia</p>
+                <p class="mb-1"><strong>Grupo:</strong> @item.Grupo</p>
+                <p class="mb-1"><strong>Iva:</strong> @item.Iva</p>
+                <p class="mb-1"><strong>Costo:</strong> @item.Costo</p>
+                <p class="mb-1"><strong>Max:</strong> @item.Max</p>
+                <p class="mb-1"><strong>Min:</strong> @item.Min</p>
+                <p class="mb-1"><strong>Uni:</strong> @item.Uni</p>
+                <p class="mb-1"><strong>Codigo2:</strong> @item.Codigo2</p>
+                <p class="mb-1"><strong>Rf:</strong> @item.Rf</p>
+                <div class="mt-2">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm mb-1 w-100">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm mb-1 w-100">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm mb-1 w-100">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

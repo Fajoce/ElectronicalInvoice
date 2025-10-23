@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebHostApplication.Models.OrdenPedidos.Pedidos>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Número Pedido</th>
+            <th>Cliente</th>
+            <th>Vendedor</th>
+            <th>Fecha</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IdPedido</td>
+                <td>@item.Clientes.Nombre</td>
+                <td>@item.Vendedores.Nombre</td>
+                <td>@item.Fecha.ToShortDateString()</td>
+                <td>@item.Detalles.Sum(d => d.Subtotal).ToString("C")</td>
+             
+                <td>
+                <td>
+                    <a asp-action="FromPedido"
+                       asp-controller="FacturasElectronicas"
+                       asp-route-numeroPedido="@item.IdPedido"
+                       class="btn btn-sm btn-success">
+                        Convertir en Factura
+                    </a>
+                </td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

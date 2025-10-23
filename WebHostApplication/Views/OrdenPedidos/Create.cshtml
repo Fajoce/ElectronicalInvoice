@@ -1,0 +1,205 @@
+﻿@model WebHostApplication.ViewModels.OrdenPedidos.CreatePedidosDTO
+
+@{
+    ViewData["Title"] = "Crear Pedido";
+}
+@if (TempData["ModelErrors"] != null)
+{
+    <div class="alert alert-danger">@TempData["ModelErrors"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@Html.ValidationSummary(true)
+<h2>Crear Pedido</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label asp-for="Fecha" class="form-label"></label>
+            <input asp-for="Fecha" class="form-control" type="date" />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="IdCajero" class="form-label">Cajero</label>
+            <select asp-for="IdCajero" class="form-select" asp-items="@(ViewData["Cajeros"] as SelectList)">
+                >
+                <option value="">-- Seleccione cliente --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="IdCliente" class="form-label">Cliente</label>
+            <select asp-for="IdCliente" class="form-select" asp-items="@(ViewData["Clientes"] as SelectList)">
+                >
+                <option value="">-- Seleccione cliente --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="IdCliente2" class="form-label">Cliente2</label>
+            <select asp-for="IdCliente2" class="form-select" asp-items="@(ViewData["Clientes2"] as SelectList)">
+                <option value="">-- Seleccione cliente2 --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="IdVendedor" class="form-label">Vendedor</label>
+            <select asp-for="IdVendedor" class="form-select" asp-items="@(ViewData["Vendedores"] as SelectList)">
+                <option value="">-- Seleccione vendedor --</option>
+            </select>
+        </div>
+
+        <!-- Métodos de pago -->
+        <div class="row g-3 mb-4">
+            <div class="col"><label class="form-label">Efectivo</label><input asp-for="Efectivo" class="form-control" type="number" step="0.01" /></div>
+            <div class="col"><label class="form-label">Dinero</label><input asp-for="Dinero" class="form-control" type="number" step="0.01" /></div>
+            <div class="col"><label class="form-label">T. Crédito</label><input asp-for="Tcredito" class="form-control" type="number" step="0.01" /></div>
+            <div class="col"><label class="form-label">T. Débito</label><input asp-for="Tdebito" class="form-control" type="number" step="0.01" /></div>
+            <div class="col"><label class="form-label">Transferencia</label><input asp-for="Transferencia" class="form-control" type="number" step="0.01" /></div>
+            <div class="col"><label class="form-label">Crédito</label><input asp-for="Credito" class="form-control" type="number" step="0.01" /></div>
+        </div>
+    </div>
+
+    <h4>Detalles del Pedido</h4>
+    <table class="table table-bordered" id="detallestable">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Código</th>
+                <th>Referencia</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Costo</th>
+                <th>Existencia</th>
+                <th>Vendedor2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select name="Detalles[0].IdProducto" class="form-select producto-select" onchange="loadProductData(this)">
+                        <option value="">-- Seleccione producto --</option>
+                        @foreach (var p in (SelectList)ViewData["Productos"])
+                        {
+                            <option value="@p.Value">@p.Text</option>
+                        }
+                    </select>
+                </td>
+                <td><input name="Detalles[0].CodigoFijo" class="form-control codigoFijo" /></td>
+                <td><input name="Detalles[0].Referencia" class="form-control referencia" /></td>
+                <td><input name="Detalles[0].Descripcion" class="form-control descripcion" /></td>
+                <td><input name="Detalles[0].Precio" class="form-control precio" /></td>
+                <td><input name="Detalles[0].Cantidad" class="form-control cantidad"  /></td>
+                <td><input name="Detalles[0].Subtotal" value="@Model.Detalles[0].Subtotal" class="form-control subtotal" readonly /></td>
+                <td><input name="Detalles[0].Costo" class="form-control costo" /></td>
+                <td><input name="Detalles[0].Existencia" class="form-control existencia" /></td>
+                <td>
+                    @Html.DropDownList(
+                    "Detalles[0].IdVendedor2",
+                                        (SelectList)ViewData["Vendedores"] ?? new SelectList(Enumerable.Empty<SelectListItem>()),
+                                        "-- Seleccione --",
+                                        new { @class = "form-select" }
+                                        )
+                </td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" onclick="addRow()">Agregar producto</button>
+    <!-- 🔹 Total general -->
+    <div class="row mt-3">
+        <div class="col-md-4 offset-md-8">
+            <div class="input-group">
+                <span class="input-group-text fw-bold">Total General</span>
+                <input id="Total" name="Total" class="form-control text-end fw-bold" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Guardar Pedido</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let rowIndex = 1;
+
+        function addRow() {
+            var table = document.getElementById("detallestable").getElementsByTagName("tbody")[0];
+            var rowCount = table.rows.length;
+            var newRow = table.rows[0].cloneNode(true);
+
+            newRow.querySelectorAll("input").forEach(inp => inp.value = "");
+            newRow.querySelectorAll("select").forEach(sel => sel.selectedIndex = 0);
+
+            newRow.querySelectorAll("input, select").forEach(el => {
+                if (el.name) el.name = el.name.replace(/\[\d+\]/, "[" + rowCount + "]");
+                if (el.id) el.id = el.id.replace(/\_\d+__/, "_" + rowCount + "__");
+            });
+
+            table.appendChild(newRow);
+        }
+
+        function removeRow(btn) {
+            btn.closest("tr").remove();
+            updateTotal();
+        }
+
+        async function loadProductData(select) {
+            var productId = select.value;
+            if (!productId) return;
+
+            let response = await fetch('/Productos/GetById/' + productId);
+            if (response.ok) {
+                let data = await response.json();
+                var row = select.closest("tr");
+
+                row.querySelector(".codigoFijo").value = data.id ?? "";
+                row.querySelector(".referencia").value = data.rf ?? "";
+                row.querySelector(".descripcion").value = data.descripcion ?? "";
+                row.querySelector(".costo").value = data.costo ?? "";
+                row.querySelector(".existencia").value = data.existencia ?? 0;
+                row.querySelector(".precio").value = data.precio1 ?? 0;
+
+                // 👉 Esperar a que el usuario ponga la cantidad para recalcular
+                updateSubtotal(row.querySelector(".cantidad"));
+            }
+        }
+
+        function updateSubtotal(input) {
+            var row = input.closest("tr");
+            var precio = parseFloat(row.querySelector(".precio").value) || 0;
+            var cantidad = parseFloat(row.querySelector(".cantidad").value) || 0;
+
+            var subtotal = precio * cantidad;
+            row.querySelector(".subtotal").value = subtotal.toFixed(2);
+
+            updateTotal(); // recalcula el total del pedido
+        }
+
+        // Escucha cambios en precio y cantidad
+        document.addEventListener("input", function (e) {
+            if (e.target.classList.contains("cantidad") || e.target.classList.contains("precio")) {
+                updateSubtotal(e.target);
+            }
+        });
+
+        // 👇 Opcional: calcular el total de todos los subtotales
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll(".subtotal").forEach(el => {
+                total += parseFloat(el.value) || 0;
+            });
+
+            // Si tienes un input total:
+            let totalInput = document.querySelector("#Total");
+            if (totalInput) totalInput.value = total.toFixed(2);
+        }
+
+    </script>
+}
